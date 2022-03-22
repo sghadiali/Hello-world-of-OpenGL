@@ -41,12 +41,13 @@ namespace test
 
         // MVP members
         glm::mat4 m_proj;
-        glm::mat4 m_view;
+        //glm::mat4 m_view;
         // model and mvp will be created per object per draw
 
         // Translation members
         //glm::vec3 m_translationA;
         //float m_rotation;
+        std::vector<glm::vec3> cubePositions;
     };
 
 }
