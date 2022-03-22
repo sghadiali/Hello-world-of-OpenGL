@@ -13,6 +13,7 @@
 #include "tests/TestTriangle.h"
 #include "tests/TestUniform.h"
 #include "tests/TestMultipleObjects.h"
+#include "tests/TestCube.h"
 
 #include "Debug.h"
 
@@ -31,7 +32,6 @@ GLFWwindow* InitWindow()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwSwapInterval(1);
     // Open a window and create its OpenGL context
     GLFWwindow* window = glfwCreateWindow( 960, 540, "Tutorial 02 - Red triangle", NULL, NULL);
     if( window == NULL ){
@@ -42,6 +42,7 @@ GLFWwindow* InitWindow()
 
     }
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
 
     // Initialize GLEW
     glewExperimental = true; // Needed for core profile
@@ -78,6 +79,7 @@ int main( void )
     int currentSelection = -1;
     int radioSelection = 0;
     test::Test *test = nullptr;
+    glEnable(GL_DEPTH_TEST);
 
     do {
         ImGui_ImplGlfwGL3_NewFrame();
@@ -86,7 +88,8 @@ int main( void )
             ImGui::RadioButton("ClearColor",      &radioSelection, 0); ImGui::SameLine();
             ImGui::RadioButton("Triangle",        &radioSelection, 1); ImGui::SameLine();
             ImGui::RadioButton("Uniform",         &radioSelection, 2); ImGui::SameLine();
-            ImGui::RadioButton("MultipleObjects", &radioSelection, 3);
+            ImGui::RadioButton("MultipleObjects", &radioSelection, 3); 
+            ImGui::RadioButton("TestCube",        &radioSelection, 4);
         }
 
         if (currentSelection != radioSelection)
@@ -105,9 +108,13 @@ int main( void )
                 case 3 : delete test;
                          test = new test::TestMultipleObjects();
                          break;
+                case 4 : delete test;
+                         test = new test::TestCube();
+                         break;
             }
             currentSelection = radioSelection;
         }
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         test->OnUpdate(0.0f);
         test->OnRender();
