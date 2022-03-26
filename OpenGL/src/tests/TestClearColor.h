@@ -2,7 +2,6 @@
 
 #include "tests/Test.h"
 
-
 namespace test
 {
     class TestClearColor : public Test
@@ -12,7 +11,7 @@ namespace test
             ~TestClearColor();
 
             void OnUpdate(float deltaTime) override;
-            void OnRender() override;
+            void OnRender(glm::mat4 view) override;
             void OnImGuiRender() override;
 
         private:

@@ -1,4 +1,5 @@
 #pragma once
+#include "glm/glm.hpp"
 
 namespace test
 {
@@ -9,7 +10,7 @@ namespace test
             virtual ~Test() {}
 
             virtual void OnUpdate(float deltaTime) {}
-            virtual void OnRender() {}
+            virtual void OnRender(glm::mat4 view) {}
             virtual void OnImGuiRender() {}
     };
 }

@@ -28,7 +28,7 @@ namespace test
         m_texture("res/textures/phone.png"),
         m_renderer(),
         m_proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
-        m_view(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
+        //m_view(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
         m_translationA(200, 200, 0),
         m_translationB(400, 200, 0)
     {
@@ -50,14 +50,14 @@ namespace test
     {
     }
 
-    void TestMultipleObjects::OnRender()
+    void TestMultipleObjects::OnRender(glm::mat4 view)
     {
         m_renderer.Clear();
         GLCall(glClearColor(m_ClearColor[0], m_ClearColor[1], m_ClearColor[2], m_ClearColor[3]));
 
         {
             glm::mat4 model = glm::translate(glm::mat4(1.0f), m_translationA);
-            glm::mat4 mvp = m_proj * m_view * model;
+            glm::mat4 mvp = m_proj * view * model;
             m_shader.Bind();
             m_shader.SetUniformMat4f("u_MVP", mvp);
             m_renderer.Draw(m_va, m_ib, m_shader);
@@ -65,7 +65,7 @@ namespace test
 
         {
             glm::mat4 model = glm::translate(glm::mat4(1.0f), m_translationB);
-            glm::mat4 mvp = m_proj * m_view * model;
+            glm::mat4 mvp = m_proj * view * model;
             m_shader.Bind();
             m_shader.SetUniformMat4f("u_MVP", mvp);
             m_renderer.Draw(m_va, m_ib, m_shader);

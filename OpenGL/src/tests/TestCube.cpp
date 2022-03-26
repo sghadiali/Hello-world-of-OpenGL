@@ -77,17 +77,11 @@ namespace test
     {
     }
 
-    void TestCube::OnRender()
+    void TestCube::OnRender(glm::mat4 view)
     {
         m_renderer.Clear();
         GLCall(glClearColor(m_ClearColor[0], m_ClearColor[1], m_ClearColor[2], m_ClearColor[3]));
         {
-            const float radius = 10.0f;
-            float camX = sin(glfwGetTime()) * radius;
-            float camZ = cos(glfwGetTime()) * radius;
-            glm::mat4 m_view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0),
-                glm::vec3(0.0, 1.0, 0.0));
-
             int i = 0;
             for (auto& cubePosition : cubePositions)
             {
@@ -95,7 +89,7 @@ namespace test
                 model = glm::translate(model, cubePosition);
                 float angle = 20.0f * i;
                 model = glm::rotate(model, (float)glfwGetTime() * glm::radians(angle), glm::vec3(0.5f, 1.0f, 0.0f));
-                glm::mat4 mvp = m_proj * m_view * model;
+                glm::mat4 mvp = m_proj * view * model;
                 m_shader.Bind();
                 m_shader.SetUniformMat4f("u_MVP", mvp);
                 m_renderer.Draw(m_va, m_ib, m_shader);

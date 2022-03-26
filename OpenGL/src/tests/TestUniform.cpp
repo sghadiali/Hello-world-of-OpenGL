@@ -55,7 +55,7 @@ namespace test
         }
     }
 
-    void TestUniform::OnRender()
+    void TestUniform::OnRender(glm::mat4 view)
     {
         m_renderer.Clear();
         GLCall(glClearColor(m_ClearColor[0], m_ClearColor[1], m_ClearColor[2], m_ClearColor[3]));

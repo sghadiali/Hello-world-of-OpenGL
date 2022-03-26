@@ -30,7 +30,7 @@ namespace test
     {
     }
 
-    void TestTriangle::OnRender()
+    void TestTriangle::OnRender(glm::mat4 view)
     {
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
         GLCall(glClearColor(m_ClearColor[0], m_ClearColor[1], m_ClearColor[2], m_ClearColor[3]));
